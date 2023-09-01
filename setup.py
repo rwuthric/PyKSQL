@@ -3,7 +3,7 @@ import pyksql
 
 setup(
     name='PyKSQL',
-    version=pyksql.__version__,    
+    version=pyksql.__version__,
     description='Python to Apache ksqlDB',
     url='https://github.com/rwuthric/PyKSQL',
     author=pyksql.__author__,

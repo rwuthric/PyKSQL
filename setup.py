@@ -4,7 +4,7 @@ import pyksql
 setup(
     name='PyKSQL',
     version=pyksql.__version__,
-    description='Python to Apache ksqlDB',
+    description='Python client for Apache ksqlDB',
     url='https://github.com/rwuthric/PyKSQL',
     author=pyksql.__author__,
     author_email=pyksql.__email__,

@@ -132,9 +132,12 @@ class KSQL:
 
         async with httpx.AsyncClient(http2=True, timeout=3600) as client:
             async with client.stream(method="POST", url=url, json=data) as stream:
-                async for chunk in stream.aiter_text():
+                async for chunk in stream.aiter_lines():
                     if chunk:
-                        results = json.loads(chunk.decode("utf-8"))
+                        try:
+                            results = json.loads(chunk)
+                        except ValueError:
+                            print("ERROR in decoding ", chunk)
 
                         if stream.status_code != 200:
                             on_error(stream.status_code, chunk)
@@ -165,9 +168,12 @@ class KSQL:
 
         async with httpx.AsyncClient(http2=True, timeout=3600) as client:
             async with client.stream(method="POST", url=url, json=data) as stream:
-                async for chunk in stream.aiter_text():
+                async for chunk in stream.aiter_lines():
                     if chunk:
-                        results = json.loads(chunk.decode("utf-8"))
+                        try:
+                            results = json.loads(chunk)
+                        except ValueError:
+                            print("ERROR in decoding ", chunk)
 
                         if stream.status_code != 200:
                             print('ERROR', stream.status_code, chunk)

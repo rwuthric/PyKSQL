@@ -134,7 +134,7 @@ class KSQL:
             async with client.stream(method="POST", url=url, json=data) as stream:
                 async for chunk in stream.aiter_text():
                     if chunk:
-                        results = json.loads(chunk)
+                        results = json.loads(chunk.decode("utf-8"))
 
                         if stream.status_code != 200:
                             on_error(stream.status_code, chunk)
@@ -167,7 +167,7 @@ class KSQL:
             async with client.stream(method="POST", url=url, json=data) as stream:
                 async for chunk in stream.aiter_text():
                     if chunk:
-                        results = json.loads(chunk)
+                        results = json.loads(chunk.decode("utf-8"))
 
                         if stream.status_code != 200:
                             print('ERROR', stream.status_code, chunk)

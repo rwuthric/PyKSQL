@@ -37,6 +37,19 @@ df = asyncio.run(
     ksql.query_to_dataframe("SELECT * FROM services;")
 )
 ```
+To run queries in a `Jupyter` NoteBook use:
+```
+await ksql.query(
+    "SELECT * FROM services;",
+    on_init=print,
+    on_new_row=print,
+    on_close=lambda: print("No more entries"),
+)
+```
+and
+```
+df = await ksql.query_to_dataframe(SELECT * FROM services;)
+```
 
 ## Installation
 Create a local clone of this repository and in the root directory of the cloned code run:

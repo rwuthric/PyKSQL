@@ -8,6 +8,7 @@ This code is inspired from the work of [@sauljabin](https://github.com/sauljabin
 ## Usage
 To connect to a running `ksqlDB` server (in this example running on `localhost` on port `8088`):
 ```
+from pyksql.ksql import KSQL
 ksql = KSQL("http://localhost:8088")
 ```
 General information about the `ksqlDB` server can be obtained like so:

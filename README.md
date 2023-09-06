@@ -59,7 +59,7 @@ pip install .
 ```
 or install it directly from GitHub:
 ```
-git+https://github.com/rwuthric/PyKSQL.git
+pip install git+https://github.com/rwuthric/PyKSQL.git
 ```
 
 ## Uninstall

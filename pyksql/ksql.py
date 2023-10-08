@@ -112,6 +112,14 @@ class KSQL:
 
         return response.json(object_hook=json_to_topic)[0]
 
+    def close_query(self, id):
+        """
+        Closes a query
+        """
+        url = urljoin(self.ksqlDB_server, "/close-query")
+        data = {"queryId": id}
+        httpx.post(url, json=data, headers=KSQL_HEADERS)
+
     async def query(
         self,
         query,

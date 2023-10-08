@@ -127,7 +127,7 @@ class KSQL:
         url = urljoin(self.ksqlDB_server, "/query-stream")
         data = {
             "sql": query,
-            "properties": {"auto.offset.reset": "earliest"} if earliest else {},
+            "properties": {"auto.offset.reset": "earliest"} if earliest else {"auto.offset.reset": "latest"},
         }
 
         async with httpx.AsyncClient(http2=True, timeout=3600) as client:

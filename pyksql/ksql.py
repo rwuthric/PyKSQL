@@ -112,6 +112,21 @@ class KSQL:
 
         return response.json(object_hook=json_to_topic)[0]
 
+    def insert_into_stream(self, stream_name, rows):
+        """
+        Insert rows into a data stream
+        """
+        url = urljoin(self.ksqlDB_server, "/inserts-stream")
+        data = json.dumps({"target": stream_name}) + "\n"
+        for row in rows:
+            data += f"{json.dumps(row)}\n"
+
+        client = httpx.Client(http1=False, http2=True)
+        with client.stream(method="POST", url=url, content=data,
+                           headers={"Content-Type": "application/vnd.ksql.v1+json"}) as r:
+            response_data = [json.loads(x) for x in r.iter_lines()]
+        return response_data
+
     def close_query(self, id):
         """
         Closes a query

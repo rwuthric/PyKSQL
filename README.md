@@ -52,6 +52,19 @@ and
 df = await ksql.query_to_dataframe(SELECT * FROM services;)
 ```
 
+To insert some rows into a ksql data stream named `data_tags_stream` use:
+```
+rows = [
+    {
+        "TAG_ID": "user_tag",
+        "TAG_VALUE": "my tag",
+    },
+]
+
+ksql.insert_into_stream('data_tags_stream', rows)
+```
+where as many rows as needed can be inserted at the same time.
+
 ## Installation
 Create a local clone of this repository and in the root directory of the cloned code run:
 ```

@@ -188,6 +188,7 @@ class KSQL:
         }
 
         rows = []
+        columns_name = []
 
         async with httpx.AsyncClient(http2=True, timeout=3600) as client:
             async with client.stream(method="POST", url=url, json=data) as stream:

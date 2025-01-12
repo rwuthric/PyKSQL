@@ -127,6 +127,38 @@ class KSQL:
             response_data = [json.loads(x) for x in r.iter_lines()]
         return response_data
 
+    def get_kafka_topic(self, stream_name):
+        """
+        Gets Kafka topic from the ksqlDB stream 'stream_name'
+
+        :param stream_name: Name of the ksqlDB stream
+        :return: The Kafka topic name as a string
+        :raises Exception: If the query fails or the stream is not found
+        """
+        url = urljoin(self.ksqlDB_server, "/ksql")
+        query = f"DESCRIBE {stream_name} EXTENDED;"
+        with httpx.Client() as client:
+            # Send the query to the ksqlDB REST API
+            response = client.post(
+                url,
+                headers={"Content-Type": "application/vnd.ksql.v1+json; charset=utf-8"},
+                json={"ksql": query}
+            )
+
+        # Raise error if the request failed
+        if response.status_code != 200:
+            raise Exception(
+                f"Failed to query ksqlDB. HTTP Status: {response.status_code}, Response: {response.text}"
+            )
+
+        # Parse the response
+        data = response.json()
+        if "sourceDescription" in data[0]:
+            # Extract and return the Kafka topic
+            return data[0]["sourceDescription"]["topic"]
+        else:
+            raise Exception("Stream details not found in the response.")
+
     def close_query(self, id):
         """
         Closes a query
